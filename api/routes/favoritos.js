@@ -3,8 +3,8 @@ const { agregarFavoritos, getFavoritos, deleteFavoritos } = require("../controll
 const { validateAuth } = require("../middlewar/auth")
 const router = express.Router()
 
-router.post("/agregarFavoritos", validateAuth, agregarFavoritos)
-router.get("/getFavoritos", validateAuth, getFavoritos)
+router.post("/agregarFavoritos/:id", agregarFavoritos)
+router.get("/getFavoritos/:id", getFavoritos)
 router.delete("/deleteFavorito/:id", deleteFavoritos)
 
 module.exports = router

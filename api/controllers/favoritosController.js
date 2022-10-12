@@ -2,29 +2,29 @@ const { Favoritos } = require("../models")
 
 
 exports.agregarFavoritos =(req, res) =>{
-    const idMovie= req.body.dataMovie.id
-    const description = req.body.dataMovie.overview
-    const poster= req.body.dataMovie.poster_path
-    const tipo= req.body.dataMovie.title? req.body.dataMovie.title: req.body.dataMovie.name
+    const idMovie= req.body.movie.id
+    const description = req.body.movie.overview
+    const poster= req.body.movie.poster_path
+    const tipo= req.body.movie.title? req.body.movie.title: req.body.movie.name
     Favoritos.findOrCreate({
         where:{
             idMovie,
-            userId: req.user.id
-
+            userId: req.params.id
     },
      defaults:{
         idMovie,
         poster,
         tipo,
         description,
-        userId: req.user.id
+        userId: req.params.id
     }
     })    
 }
 exports.getFavoritos= (req,res)=>{
+    console.log(req.params.id);
     Favoritos.findAll({
         where:{
-            userId:req.user.id
+            userId:req.params.id
         }
     })
     .then(result => res.send(result))

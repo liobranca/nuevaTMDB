@@ -1,0 +1,42 @@
+.detailsConteiner{
+    display:flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+
+.movieImage{
+    border-radius: 15px;
+    max-width: 400px;
+    margin: 15px;
+    height: auto;
+    height: 80%;
+}
+.movieDetails{
+    font-size: 1.5rem;
+    max-width: 400px;
+    margin: 15px;
+    height: auto;
+    height: 80%;
+    margin-bottom: 50px;
+}
+.firstItem{
+    margin-top: 0;
+}
+.contenedorBoton{
+    display:flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 255px;
+
+}
+.boton{
+    margin: auto;
+    
+
+}
+.mensajeBienvenida{
+    text-align: center;
+    font-size: 50px;
+    color: blanchedalmond;
+}
