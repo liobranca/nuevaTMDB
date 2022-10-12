@@ -2,15 +2,22 @@ import React from "react";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import { getAll } from "../state/peliculas";
+import axios from "axios";
 
 function NavBar() {
   const [perfileOn, setPerfileOn] = useState(true);
   const [burgerOn, setBurgerOn] = useState(true);
-  const [movieOrTv, setMovieOrTv] = useState("tv")
-  const dispatch = useDispatch()
+  const perfil= localStorage.getItem("user")
+  const [render, setRender] =useState(true)
+
+  useEffect(()=>{
+  
+
+  }, [render])
+
+
 
   const showPerfile = () => {
     setPerfileOn(!perfileOn);
@@ -18,9 +25,12 @@ function NavBar() {
   const showBurger = () => {
     setBurgerOn(!burgerOn);
   };
-  useEffect(()=>{
-    dispatch(getAll(movieOrTv))
-  })
+  const logOut = ()=>{
+    localStorage.clear()
+    setRender(!render)
+    
+  }
+
   return (
     <>
       <nav class="bg-gray-800">
@@ -69,40 +79,36 @@ function NavBar() {
             </div>
             <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
               <div class="flex flex-shrink-0 items-center">
-                <img
-                  class="block h-8 w-auto lg:hidden"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                  alt="Your Company"
-                />
-                <img
-                  class="hidden h-8 w-auto lg:block"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                  alt="Your Company"
-                />
               </div>
               <div class="hidden sm:ml-6 sm:block">
                 <div class="flex space-x-4">
-                  <a
+                  <Link to="/"
                     href="#"
-                    class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+                    class="bg-gray-900 text-white px-3 py-2 rounded-md text-xl font-medium"
                     aria-current="page"
                   >
                     Inicio
-                  </a>
+                  </Link>
 
-                  <a
-                    href="#"
-                    class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  <Link
+                    to="/peliculas"
+                    class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium"
                   >
                     Peliculas
-                  </a>
+                  </Link>
 
-                  <a
-                    href="#"
-                    class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  <Link
+                  to="/tv"
+                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium"
                   >
                     Series
-                  </a>
+                  </Link>
+                  <Link
+                  to="/usuarios"
+                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium"
+                  >
+                    Usuarios
+                  </Link>
 
                   <form>
                     <input
@@ -116,7 +122,7 @@ function NavBar() {
                       placeholder="Buscar..."
                     />
                     <button>
-                      <FontAwesomeIcon icon={faMagnifyingGlass} />
+                      <FontAwesomeIcon color="white" icon={faMagnifyingGlass} />
                     </button>
                   </form>
                 </div>
@@ -159,42 +165,7 @@ function NavBar() {
                   </button>
                 </div>
                 {perfileOn ? (
-                  <div
-                    style={{ display: "none" }}
-                    class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                    role="menu"
-                    aria-orientation="vertical"
-                    aria-labelledby="user-menu-button"
-                    tabindex="-1"
-                  >
-                    <a
-                      href="#"
-                      class="block px-4 py-2 text-sm text-gray-700"
-                      role="menuitem"
-                      tabindex="-1"
-                      id="user-menu-item-0"
-                    >
-                      Your Profile
-                    </a>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 text-sm text-gray-700"
-                      role="menuitem"
-                      tabindex="-1"
-                      id="user-menu-item-1"
-                    >
-                      Settings
-                    </a>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 text-sm text-gray-700"
-                      role="menuitem"
-                      tabindex="-1"
-                      id="user-menu-item-2"
-                    >
-                      Sign out
-                    </a>
-                  </div>
+            ""
                 ) : (
                   <div
                     class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
@@ -202,25 +173,49 @@ function NavBar() {
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
                     tabindex="-1"
+                  >{perfil? 
+                    <Link
+                    to="/perfil"
+                    class="block px-4 py-2 text-sm text-gray-700"
+                    role="menuitem"
+                    tabindex="-1"
+                    id="user-menu-item-0"
                   >
-                    <a
-                      href="#"
-                      class="block px-4 py-2 text-sm text-gray-700"
-                      role="menuitem"
-                      tabindex="-1"
-                      id="user-menu-item-0"
-                    >
-                      Your Profile
-                    </a>
-                    <a
-                      href="#"
+                    Your Profile
+                  </Link>
+                  :
+                  <Link
+                  to="/register"
+                  class="block px-4 py-2 text-sm text-gray-700"
+                  role="menuitem"
+                  tabindex="-1"
+                  id="user-menu-item-0"
+                >
+                  Create Account
+                </Link>}
+                
+                    {!perfil ? 
+                    <Link
+                      to="/singIn"
                       class="block px-4 py-2 text-sm text-gray-700"
                       role="menuitem"
                       tabindex="-1"
                       id="user-menu-item-2"
                     >
-                      Sign out
-                    </a>
+                      Sign in
+                    </Link>
+                    :
+                    <button
+                      to="/singIn"
+                      class="block px-4 py-2 text-sm text-gray-700"
+                      role="menuitem"
+                      tabindex="-1"
+                      id="user-menu-item-2"
+                      onClick={logOut}
+                    >
+                      log Out
+                    </button>
+                    }
                   </div>
                 )}
               </div>
@@ -228,68 +223,42 @@ function NavBar() {
           </div>
         </div>
         {burgerOn ? (
-          <div style={{ display: "none" }} class="sm:hidden" id="mobile-menu">
-            <div class="space-y-1 px-2 pt-2 pb-3">
-              <a
-                href="#"
-                class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
-                aria-current="page"
-              >
-                Dashboard
-              </a>
-
-              <a
-                href="#"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
-                Team
-              </a>
-
-              <a
-                href="#"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
-                Projects
-              </a>
-
-              <a
-                href="#"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
-                Calendar
-              </a>
-            </div>
-          </div>
+ ""
         ) : (
           <div class="sm:hidden" id="mobile-menu">
             <div class="space-y-1 px-2 pt-2 pb-3">
-              <a
-                href="#"
-                class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
-                aria-current="page"
-              >
-                Dashboard
-              </a>
+            <Link to="/"
+                    href="#"
+                    class="bg-gray-900 text-white px-3 py-2 rounded-md text-xl font-medium"
+                    aria-current="page"
+                  >
+                    Inicio
+                  </Link>
+
+              <Link
+                    to="/peliculas"
+                    class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium"
+                  >
+                    Peliculas
+                  </Link>
+              <Link
+                  to="/tv"
+                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium"
+                  >
+                    Series
+                  </Link>
+              <Link
+                  to="/usuarios"
+                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium"
+                  >
+                    Usuarios
+                  </Link>
 
               <a
                 href="#"
                 class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
-                Team
-              </a>
-
-              <a
-                href="#"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
-                Projects
-              </a>
-
-              <a
-                href="#"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
-                Calendar
+                Search
               </a>
             </div>
           </div>

@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 
-const db = new Sequelize("tmdb", null, null, {
+const db = new Sequelize("nuevatmdb", null, null, {
     dialect:"postgres",
     host:"localhost",
   logging: false,
