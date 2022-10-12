@@ -1,15 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { getAll } from '../state/peliculas'
 
 function Content() {
-    const[movierOrTv, setMovierOrTv]= useState([])
-    const dispatch = useDispatch()
+    const[movieOrTv, setMovierOrTv]= useState([])
+
     
     
   return (
-    <div></div>
+    <div>
+      
+    </div>
   )
 }
 

@@ -17,13 +17,16 @@ exports.register = (req, res, next) => {
 
 exports.login = (req, res, next) => {
   const { email, password } = req.body;
+  console.log(req.body);
 
   User.findOne({
     where: {
       email: email,
     },
   }).then((user) => {
+    
     if (!user) return res.sendStatus(401);
+  
 
     user.validatePass(password).then((isValid) => {
       if (!isValid) return res.sendStatus(401);
@@ -33,7 +36,6 @@ exports.login = (req, res, next) => {
         id: user.id,
       };
       const token = generateToken(payload);
-      res.cookie("token", token);
       res.send(payload);
     });
   });
@@ -55,6 +57,7 @@ exports.perfil = (req, res)=>{
 
 exports.logOut= (req, res) => {
     res.clearCookie("token");
+    console.log("lalalalalal");
   
     res.sendStatus(204);
   }

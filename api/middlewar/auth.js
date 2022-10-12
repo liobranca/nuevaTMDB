@@ -8,6 +8,7 @@ function validateAuth(req, res, next) {
   if (!user) return  res.sendStatus(401);
 
   req.user = user;
+  console.log(user);
 
   next();
 }

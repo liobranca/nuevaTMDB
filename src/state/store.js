@@ -1,7 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
+import logger from "redux-logger";
 import peliculasReducer from "./peliculas"
 const store = configureStore({
-    //  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+    // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
     reducer: {
         peliculas:peliculasReducer
     }

@@ -6,7 +6,7 @@ const { validateAuth } = require("../middlewar/auth")
 
 
 router.get("/userDetails/:id", userDetails)
-router.get("/perfil", validateAuth, perfil)
+router.get("/perfil", perfil)
 router.get("/getAll", getAll)
 router.post("/logOut", logOut)
 router.post("/register", register)
