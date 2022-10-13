@@ -6,7 +6,7 @@ import "../css/cardItem.css";
 import { useState } from "react";
 import { useEffect } from "react";
 
-function CardItems({ movieOrTv }) {
+function CardItems({ movieOrTv, movieOrTvDetails }) {
   const [render, setRender] =useState(true)
   const userNoParse= localStorage.getItem("user")
   const user = JSON.parse(userNoParse)
@@ -25,14 +25,14 @@ function CardItems({ movieOrTv }) {
       
       <div className="contenedor">
         <figure className="figure">
-          <Link to={`/peliculas/${movieOrTv.id}`}>
+          <Link to={`/${movieOrTvDetails}/${movieOrTv.id}`}>
             <img
               className="imgCss"
               alt="poster portada de pelicula"
               src={"https://image.tmdb.org/t/p/w400" + `${movieOrTv.poster_path}`}
             />
             <div className="capa">
-              <h3>{movieOrTv.title}</h3>
+              <h3>{movieOrTv.title? movieOrTv.title: movieOrTv.name}</h3>
               <p>{movieOrTv.overview}</p>
             </div>
           </Link>

@@ -13,6 +13,7 @@ function Tv() {
   useEffect(()=>{
       dispatch(getAll({setMoviesOrTv,movieOrTv}))
   }, [])
+  console.log(tvs);
 
   return (
     <div>
@@ -28,7 +29,7 @@ function Tv() {
       >
         {tvs[0]
           ? tvs.map((tv, i) => (
-              <CardItems key={i} movieOrTv={tv}></CardItems>
+              <CardItems key={i} movieOrTvDetails={movieOrTv} movieOrTv={tv}></CardItems>
             ))
 
           : <div style={{height:"3000px"}}> 

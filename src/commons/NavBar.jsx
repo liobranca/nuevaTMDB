@@ -2,34 +2,32 @@ import React from "react";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
-import { useEffect } from "react";
-import axios from "axios";
+import { Link, useParams } from "react-router-dom";
 
 function NavBar() {
   const [perfileOn, setPerfileOn] = useState(true);
   const [burgerOn, setBurgerOn] = useState(true);
-  const perfil= localStorage.getItem("user")
-  const [render, setRender] =useState(true)
+  const perfil = localStorage.getItem("user");
+  const [render, setRender] = useState(true);
+  const [search, setSearch] = useState("");
+  const tv = "tv";
+  const movie = "movie";
+  const { movieParams, tvParams } = useParams();
+  console.log(movieParams, tvParams);
 
-  useEffect(()=>{
-  
-
-  }, [render])
-
-
-
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
   const showPerfile = () => {
     setPerfileOn(!perfileOn);
   };
   const showBurger = () => {
     setBurgerOn(!burgerOn);
   };
-  const logOut = ()=>{
-    localStorage.clear()
-    setRender(!render)
-    
-  }
+  const logOut = () => {
+    localStorage.clear();
+    setRender(!render);
+  };
 
   return (
     <>
@@ -78,11 +76,11 @@ function NavBar() {
               </button>
             </div>
             <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-              <div class="flex flex-shrink-0 items-center">
-              </div>
+              <div class="flex flex-shrink-0 items-center"></div>
               <div class="hidden sm:ml-6 sm:block">
                 <div class="flex space-x-4">
-                  <Link to="/"
+                  <Link
+                    to="/"
                     href="#"
                     class="bg-gray-900 text-white px-3 py-2 rounded-md text-xl font-medium"
                     aria-current="page"
@@ -91,21 +89,21 @@ function NavBar() {
                   </Link>
 
                   <Link
-                    to="/peliculas"
+                    to={`/peliculas/${movie}`}
                     class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium"
                   >
                     Peliculas
                   </Link>
 
                   <Link
-                  to="/tv"
-                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium"
+                    to={`/shows/${tv}`}
+                    class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium"
                   >
                     Series
                   </Link>
                   <Link
-                  to="/usuarios"
-                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium"
+                    to="/usuarios"
+                    class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium"
                   >
                     Usuarios
                   </Link>
@@ -113,17 +111,30 @@ function NavBar() {
                   <form>
                     <input
                       type="text"
+                      onChange={handleSearch}
                       style={{
                         marginRight: "10px",
                         width: "100px",
                         marginTop: "7px",
-                        borderRadius:"10px"
+                        borderRadius: "10px",
                       }}
                       placeholder="Buscar..."
                     />
-                    <button>
-                      <FontAwesomeIcon color="white" icon={faMagnifyingGlass} />
-                    </button>
+                    {movieParams ? (
+                      <Link to={`/search/${movieParams}/${search}`}>
+                        <FontAwesomeIcon
+                          color="white"
+                          icon={faMagnifyingGlass}
+                        />
+                      </Link>
+                    ) : (
+                      <Link to={`/search/${tvParams}/${search}`}>
+                        <FontAwesomeIcon
+                          color="white"
+                          icon={faMagnifyingGlass}
+                        />
+                      </Link>
+                    )}
                   </form>
                 </div>
               </div>
@@ -165,7 +176,7 @@ function NavBar() {
                   </button>
                 </div>
                 {perfileOn ? (
-            ""
+                  ""
                 ) : (
                   <div
                     class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
@@ -173,49 +184,51 @@ function NavBar() {
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
                     tabindex="-1"
-                  >{perfil? 
-                    <Link
-                    to="/perfil"
-                    class="block px-4 py-2 text-sm text-gray-700"
-                    role="menuitem"
-                    tabindex="-1"
-                    id="user-menu-item-0"
                   >
-                    Your Profile
-                  </Link>
-                  :
-                  <Link
-                  to="/register"
-                  class="block px-4 py-2 text-sm text-gray-700"
-                  role="menuitem"
-                  tabindex="-1"
-                  id="user-menu-item-0"
-                >
-                  Create Account
-                </Link>}
-                
-                    {!perfil ? 
-                    <Link
-                      to="/singIn"
-                      class="block px-4 py-2 text-sm text-gray-700"
-                      role="menuitem"
-                      tabindex="-1"
-                      id="user-menu-item-2"
-                    >
-                      Sign in
-                    </Link>
-                    :
-                    <button
-                      to="/singIn"
-                      class="block px-4 py-2 text-sm text-gray-700"
-                      role="menuitem"
-                      tabindex="-1"
-                      id="user-menu-item-2"
-                      onClick={logOut}
-                    >
-                      log Out
-                    </button>
-                    }
+                    {perfil ? (
+                      <Link
+                        to="/perfil"
+                        class="block px-4 py-2 text-sm text-gray-700"
+                        role="menuitem"
+                        tabindex="-1"
+                        id="user-menu-item-0"
+                      >
+                        Your Profile
+                      </Link>
+                    ) : (
+                      <Link
+                        to="/register"
+                        class="block px-4 py-2 text-sm text-gray-700"
+                        role="menuitem"
+                        tabindex="-1"
+                        id="user-menu-item-0"
+                      >
+                        Create Account
+                      </Link>
+                    )}
+
+                    {!perfil ? (
+                      <Link
+                        to="/singIn"
+                        class="block px-4 py-2 text-sm text-gray-700"
+                        role="menuitem"
+                        tabindex="-1"
+                        id="user-menu-item-2"
+                      >
+                        Sign in
+                      </Link>
+                    ) : (
+                      <button
+                        to="/singIn"
+                        class="block px-4 py-2 text-sm text-gray-700"
+                        role="menuitem"
+                        tabindex="-1"
+                        id="user-menu-item-2"
+                        onClick={logOut}
+                      >
+                        log Out
+                      </button>
+                    )}
                   </div>
                 )}
               </div>
@@ -223,36 +236,37 @@ function NavBar() {
           </div>
         </div>
         {burgerOn ? (
- ""
+          ""
         ) : (
           <div class="sm:hidden" id="mobile-menu">
             <div class="space-y-1 px-2 pt-2 pb-3">
-            <Link to="/"
-                    href="#"
-                    class="bg-gray-900 text-white px-3 py-2 rounded-md text-xl font-medium"
-                    aria-current="page"
-                  >
-                    Inicio
-                  </Link>
+              <Link
+                to="/"
+                href="#"
+                class="bg-gray-900 text-white px-3 py-2 rounded-md text-xl font-medium"
+                aria-current="page"
+              >
+                Inicio
+              </Link>
 
               <Link
-                    to="/peliculas"
-                    class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium"
-                  >
-                    Peliculas
-                  </Link>
+                to="/peliculas"
+                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium"
+              >
+                Peliculas
+              </Link>
               <Link
-                  to="/tv"
-                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium"
-                  >
-                    Series
-                  </Link>
+                to="/tv"
+                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium"
+              >
+                Series
+              </Link>
               <Link
-                  to="/usuarios"
-                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium"
-                  >
-                    Usuarios
-                  </Link>
+                to="/usuarios"
+                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium"
+              >
+                Usuarios
+              </Link>
 
               <a
                 href="#"

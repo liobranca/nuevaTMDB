@@ -10,15 +10,21 @@ import "../css/peliculasDetails.css"
 
 function PeliculasDetails() {
     const[pelicula, setPelicula]=useState("")
-    const {id} = useParams()
+    const {id, movieOrTvDetails} = useParams()
+    const userNoParse= localStorage.getItem("user")
+    const user = JSON.parse(userNoParse)
+  
     useEffect(()=>{
-        axios.get(`http://localhost:3001/api/movieOrSerie/details/movie/${id}`)
+        axios.get(`http://localhost:3001/api/movieOrSerie/details/${movieOrTvDetails}/${id}`)
         .then(result => setPelicula(result.data))
     },[])
+    const handleFav = ()=>{
+      axios.post(`http://localhost:3001/api/favoritos/agregarFavoritos/${user.id}`, {pelicula})
+    }
     console.log(pelicula);
   return <>
     <NavBar/>
-    <div>
+    <div style={{marginBottom:"300px"}}>
        <div className="detailsConteiner">
         <img className="movieImage" src={"https://image.tmdb.org/t/p/w400" + `${pelicula.poster_path}`} alt="poster pelicula" />
         <div className="movieDetails" style={{color: "white"}}>
@@ -28,7 +34,7 @@ function PeliculasDetails() {
         </div>
        
        </div>  
-       <div className="contenedorBoton"><Button colorScheme='blue' className="boton" >Agreagar a favoritos</Button></div>
+     
         
   </div>
   <Footer/>
