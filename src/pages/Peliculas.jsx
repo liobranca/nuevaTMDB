@@ -28,7 +28,7 @@ function Peliculas() {
       >
         {movies[0]
           ? movies.map((movie, i) => (
-              <CardItems key={i} movieOrTv={movie}></CardItems>
+              <CardItems key={i}  movieOrTvDetails={movieOrTv} movieOrTv={movie}></CardItems>
             ))
 
           : <div style={{height:"3000px"}}> 
